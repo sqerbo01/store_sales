@@ -25,9 +25,18 @@ def merge_data(train, stores, oil, holidays, transactions):
 
 
 def add_time_features(df):
-    df['dayofweek'] = df['date'].dt.dayofweek
-    df['month'] = df['date'].dt.month
-    df['year'] = df['date'].dt.year
+    df["dayofweek"] = df["date"].dt.dayofweek
+    df["weekday_name"] = df["date"].dt.day_name()
+    df["month"] = df["date"].dt.month
+    df["year"] = df["date"].dt.year
+    df["weekofyear"] = df["date"].dt.isocalendar().week.astype(int)
+    df["dayofmonth"] = df["date"].dt.day
+    df["is_weekend"] = df["dayofweek"].isin([5, 6])  # Saturday, Sunday
+    df["is_month_start"] = df["date"].dt.is_month_start
+    df["is_month_end"] = df["date"].dt.is_month_end
+    df["is_quarter_start"] = df["date"].dt.is_quarter_start
+    df["is_quarter_end"] = df["date"].dt.is_quarter_end
+    df["n_days_from_start"] = (df["date"] - df["date"].min()).dt.days
     df['day'] = df['date'].dt.day
     df['is_weekend'] = df['dayofweek'].isin([5, 6]).astype(int)
     return df
@@ -54,7 +63,7 @@ def preprocess_pipeline(data_path):
     df = add_time_features(df)
     df = create_lag_features(df)
     df = encode_categoricals(df)
-    df['log_sales'] = np.log1p(df['sales'])
+    # df['log_sales'] = np.log1p(df['sales'])
     df.fillna(method='bfill', inplace=True)
     return df
 
