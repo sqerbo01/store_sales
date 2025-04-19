@@ -172,3 +172,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Ignore all CSV files in data and its subfolders
+data/**/*.csv
