@@ -1,1 +1,8 @@
 # store_sales
+This project was developed as part of the Kaggle competition "Store Sales - Time Series Forecasting." The objective is to predict daily sales for a wide range of product families sold across multiple Favorita stores in Ecuador. The task involves forecasting sales for a 15-day period following the last date in the training data, using a variety of features provided in several datasets. These include historical sales data, promotional information, store-level metadata, daily oil prices, local holidays and events, and transaction volumes.
+
+The evaluation metric used in the competition is Root Mean Squared Logarithmic Error (RMSLE), which is particularly suitable for this task as it penalizes under-predictions more heavily than over-predictions and helps handle the wide range of sales values.
+
+The work carried out so far includes exploratory data analysis to understand temporal sales patterns, the impact of holidays, promotions, and store-level differences. Data preprocessing and feature engineering steps were implemented to merge external datasets and extract relevant time-based and categorical features. Categorical variables were encoded appropriately for use in tree-based models.
+
+A Ridge Regression model was used as a baseline. Subsequently, a tuned XGBoost Regressor was trained with time-series cross-validation and custom RMSLE scoring. The final predictions were post-processed using an inverse log transformation and clipped to ensure non-negative sales values. The resulting predictions were saved in the required submission format. Future improvements include more advanced feature engineering (such as lagged and rolling window statistics), model ensembling, and the exploration of alternative forecasting algorithms.
